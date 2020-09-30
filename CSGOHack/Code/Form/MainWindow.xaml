@@ -1,0 +1,184 @@
+﻿<mah:MetroWindow x:Class="CSGOHack.Code.Form.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CSGOHack"
+        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+        mc:Ignorable="d"
+        Title="MainWindow"
+        Height="282" Width="388"
+        Background="{x:Null}"
+        WindowStyle="None" 
+        AllowsTransparency="True"
+        WindowStartupLocation="CenterScreen"
+        ShowTitleBar="False"
+        ShowMinButton="False"
+        ShowCloseButton="False"
+        ShowMaxRestoreButton="False"
+        ResizeMode="NoResize"
+        Loaded="MetroWindow_Loaded"
+        Closing="MetroWindow_Closing"
+        BorderThickness="0"
+        NonActiveBorderBrush="{x:Null}"
+        NonActiveWindowTitleBrush="{x:Null}"
+        WindowTitleBrush="{x:Null}"
+        Foreground="{x:Null}">
+    <mah:MetroWindow.Resources>
+        <Style TargetType="{x:Type mah:ToggleSwitch}">
+            <Setter Property="ContentPadding" Value="0,0,4,0"/>
+            <Setter Property="mah:ControlsHelper.HeaderFontSize" Value="{DynamicResource ToggleSwitchHeaderFontSize}"/>
+            <Setter Property="mah:ControlsHelper.HeaderMargin" Value="0,0,0,5"/>
+            <Setter Property="FontFamily" Value="{DynamicResource ToggleSwitchFontFamily}"/>
+            <Setter Property="FontSize" Value="{DynamicResource ToggleSwitchFontSize}"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+            <Setter Property="HeaderFontFamily" Value="{DynamicResource ToggleSwitchHeaderFontFamily}"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="IsTabStop" Value="True"/>
+            <Setter Property="OffSwitchBrush" Value="{DynamicResource GrayBrush4}"/>
+            <Setter Property="OnSwitchBrush" Value="{DynamicResource AccentColorBrush}"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type mah:ToggleSwitch}">
+                        <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal"/>
+                                    <VisualState x:Name="Disabled">
+                                        <Storyboard>
+                                            <DoubleAnimation Duration="0" To="0.3" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="Header"/>
+                                            <DoubleAnimation Duration="0" To="0.3" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="Content"/>
+                                            <DoubleAnimation Duration="0" To="0.75" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="Switch"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <Grid Background="Transparent">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition x:Name="firstCol" Width="*"/>
+                                    <ColumnDefinition x:Name="secCol" Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <ContentControl x:Name="Header" Grid.ColumnSpan="2" ContentTemplate="{TemplateBinding HeaderTemplate}" Content="{TemplateBinding Header}" ContentStringFormat="{TemplateBinding HeaderStringFormat}" IsTabStop="False" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="12" FontFamily="Yu Gothic UI Light"/>
+                                <ContentControl x:Name="Content" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" IsTabStop="False" Margin="{TemplateBinding ContentPadding}" Grid.Row="1" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" FontFamily="Yu Gothic UI Light" FontSize="11"/>
+                                <mah:ToggleSwitchButton x:Name="Switch" Background="{TemplateBinding Background}" Grid.Column="1" FocusVisualStyle="{x:Null}" IsChecked="{Binding IsChecked, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged}" OffSwitchBrush="{TemplateBinding OffSwitchBrush}" OnSwitchBrush="{TemplateBinding OnSwitchBrush}" Grid.Row="1" Style="{TemplateBinding ToggleSwitchButtonStyle}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" ThumbIndicatorWidth="{TemplateBinding ThumbIndicatorWidth}" ThumbIndicatorDisabledBrush="{TemplateBinding ThumbIndicatorDisabledBrush}" VerticalAlignment="Center" Width="45" Height="25" ThumbIndicatorBrush="#FF6E6E6E"/>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsChecked" Value="True"/>
+                                    <Condition Property="Content" Value="{x:Null}"/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="Content" TargetName="Content" Value="{Binding OnLabel, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"/>
+                            </MultiTrigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsChecked" Value="False"/>
+                                    <Condition Property="Content" Value="{x:Null}"/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="Content" TargetName="Content" Value="{Binding OffLabel, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"/>
+                            </MultiTrigger>
+                            <DataTrigger Binding="{Binding Header, RelativeSource={RelativeSource Self}}" Value="{x:Null}">
+                                <Setter Property="Visibility" TargetName="Header" Value="Collapsed"/>
+                            </DataTrigger>
+                            <Trigger Property="ContentDirection" Value="RightToLeft">
+                                <Setter Property="ContentPadding" Value="4,0,0,0"/>
+                                <Setter Property="Grid.Column" TargetName="Content" Value="1"/>
+                                <Setter Property="Grid.Column" TargetName="Switch" Value="0"/>
+                                <Setter Property="Width" TargetName="firstCol" Value="Auto"/>
+                                <Setter Property="Width" TargetName="secCol" Value="*"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="ThumbIndicatorBrush" Value="{DynamicResource BlackBrush}"/>
+            <Setter Property="ThumbIndicatorDisabledBrush" Value="{DynamicResource GrayBrush4}"/>
+            <Setter Property="ThumbIndicatorWidth" Value="13"/>
+            <Setter Property="ToggleSwitchButtonStyle" Value="{DynamicResource MahApps.Metro.Styles.ToggleSwitchButton}"/>
+            <Setter Property="Validation.ErrorTemplate" Value="{DynamicResource ValidationErrorTemplate}"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+    </mah:MetroWindow.Resources>
+    <Grid RenderTransformOrigin="0.5,0.5" Margin="0">
+        <Border BorderBrush="#FF969696" BorderThickness="1,0" Margin="0" CornerRadius="8">
+            <Border.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FFE6E6E6" Offset="0"/>
+                    <GradientStop Color="#FFDADADA" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
+        </Border>
+        <Border BorderBrush="#FF969696" BorderThickness="1,1,1,0" Height="25" Margin="0" VerticalAlignment="Top" CornerRadius="8,8,0,0" MouseDown="Border_MouseDown">
+            <Border.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FFEBEBEB" Offset="0"/>
+                    <GradientStop Color="#FFD2D2D2" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
+        </Border>
+        <Label x:Name="LabelTitle" Margin="0" VerticalAlignment="Top" Height="25" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" FontFamily="Yu Gothic UI Light" IsHitTestVisible="False" Content="Label" Padding="0"/>
+        <Ellipse Height="15" Width="15" Margin="0,5,5,0" Fill="#FFFF3A3A" HorizontalAlignment="Right" VerticalAlignment="Top" MouseUp="Ellipse_MouseUp"/>
+        <mah:MetroContentControl>
+            <TabControl Margin="0,25,0,0" Padding="2">
+                <TabItem Header="ESP" mah:ControlsHelper.HeaderFontSize="12" Background="{x:Null}">
+                    <Grid>
+                        <mah:ToggleSwitch x:Name="TogleSwitchEspName" Header="Name" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                        <mah:ToggleSwitch x:Name="TogleSwitchEspDistance" Header="Distance" Margin="79,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                        <mah:ToggleSwitch x:Name="TogleSwitchEspHealth" Header="Health" Margin="10,102,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                        <mah:ToggleSwitch x:Name="TogleSwitchEspBox2D" Header="Box 2D" Margin="10,56,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                        <mah:ToggleSwitch x:Name="TogleSwitchEspBox3D" Header="Box 3D" Margin="79,56,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                        <mah:ToggleSwitch x:Name="TogleSwitchEspSnapline" Header="Snapline" Margin="148,56,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                        <mah:ToggleSwitch x:Name="TogleSwitchEspOnlyEnemy" Header="Only enemy" Margin="10,148,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                        <mah:ToggleSwitch x:Name="TogleSwitchEspHealth_Copy" Header="Armor" Margin="79,102,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Aimbot" mah:ControlsHelper.HeaderFontSize="12" Background="{x:Null}">
+                    <Grid>
+                        <mah:ToggleSwitch x:Name="TogleSwitchAimbot" Header="Aimbot" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                        <mah:ToggleSwitch x:Name="TogleSwitchAimbotDrawFov" Header="Draw FOV" Margin="110,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                        <Border BorderBrush="Black" BorderThickness="0" HorizontalAlignment="Left" Height="18" Margin="10,57,0,0" VerticalAlignment="Top" Width="164">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="47*"/>
+                                    <ColumnDefinition Width="18*"/>
+                                </Grid.ColumnDefinitions>
+                                <Slider x:Name="SliderAimbotFov" Margin="0" Style="{DynamicResource FlatSlider}" ValueChanged="SliderAimbotFov_ValueChanged"/>
+                                <Label x:Name="LabelAimbotFov" Content="Label" Margin="0" Grid.Column="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0"/>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Radar" mah:ControlsHelper.HeaderFontSize="12" Background="{x:Null}">
+                    <Grid>
+                        <CheckBox Content="CheckBox" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+                        <Slider HorizontalAlignment="Left" Margin="10,33,0,0" VerticalAlignment="Top" Style="{DynamicResource FlatSlider}" Height="21" Width="137"/>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Misc" mah:ControlsHelper.HeaderFontSize="12" Background="{x:Null}">
+                    <Grid>
+                        <CheckBox Content="CheckBox" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+                        <Slider HorizontalAlignment="Left" Margin="10,33,0,0" VerticalAlignment="Top" Style="{DynamicResource FlatSlider}" Height="21" Width="137"/>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Config" mah:ControlsHelper.HeaderFontSize="12" Background="{x:Null}">
+                    <Grid>
+                        <Button Content="Save" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75"/>
+                        <Button Content="Load" HorizontalAlignment="Left" Margin="90,10,0,0" VerticalAlignment="Top" Width="75"/>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Log" mah:ControlsHelper.HeaderFontSize="12" Background="{x:Null}">
+                    <Grid>
+                        <TextBox x:Name="TextBoxLog" Margin="0" TextWrapping="Wrap" Background="{x:Null}"/>
+                    </Grid>
+                </TabItem>
+            </TabControl>
+        </mah:MetroContentControl>
+    </Grid>
+</mah:MetroWindow>
